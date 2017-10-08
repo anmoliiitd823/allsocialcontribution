@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Allsocial</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'components/test', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'components/test', 'data-turbolinks-track' => true %>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-noty/2.4.1/packaged/jquery.noty.packaged.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+  <meta name="viewport" content="initial-scale=1.0, width=device-width">
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+	<header id="body-header">
+		<div id="page-logo">
+			<%= link_to "/" do%>
+				<%= image_tag("reddit-logo.png") %>
+			<% end %>
+		</div>
+
+		<div id="auth-links">
+			<ul>
+				<% if !user_signed_in? %>
+					<% if !current_page?(new_user_session_path) %>
+					<li>
+						<p>
+							<%= link_to "Sign In", new_user_session_path %>
+						</p>
+					</li>
+					<% end %>
+					<% if !current_page?(new_user_registration_path) %>
+					<li>
+						<p>
+							<%= link_to "Sign Up", new_user_registration_path %>
+						</p>
+					</li>
+					<% end %>
+				<% else %>
+				<li>
+					<p><%= current_user.email %></p>
+				</li>
+				<li>
+					<p><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></p>
+				</li>
+				<% end %>
+				
+			</ul>
+		</div>
+	</header>
+
+<%= yield %>
+
+</body>
+</html>

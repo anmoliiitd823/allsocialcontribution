@@ -1,0 +1,13 @@
+<% if (current_user!=u) %>
+	<li id="user-<%= u.id %>" class="user">
+			<div class="email">
+				
+				<p >
+					<%= link_to u.email, '/users/'+u.id.to_s %>
+				</p>
+				<p>
+					<%= link_to "F",friendships_create_path(:friend_id => u),:method => :post%>
+				</p>
+			</div>
+	</li>		
+<% end %>

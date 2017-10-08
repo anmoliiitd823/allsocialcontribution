@@ -1,0 +1,50 @@
+<div id="friends-container">
+			<h2>HANGOUT ARENA</h2>
+			<div id="user-search-container">
+				<input id="user-search">
+			</div>
+			<h5>Friends</h5>
+			<ul>
+			
+				
+				
+			<% for friendship in @all_u_frnds %>
+			    <li>		
+			      <%= friendship.friend.email %>
+			      (<%= link_to "remove", friendships_destroy_path(:type => "friend",:id => friendship.id) , :method => :delete %>)
+			    </li>
+			<% end %>
+			<% for inverse_friendships in @all_i_frnds %>
+
+			    <li><%= inverse_friendships.user.email %></li>
+			    (<%= link_to "remove", friendships_destroy_path(:type => "inverse-friend",:id => inverse_friendships.id) , :method => :delete %>)
+			    <% end %>
+			</ul>
+			<h5>Pending Request FOR You</h5>
+			<ul>
+			<% for inverse_friendships in @all_req_user %>
+			    <li><%= inverse_friendships.user.email %></li>
+			    (<%= link_to "Confirm Request", friendships_accept_path(:friend_id => inverse_friendships.user),:method => :post %>)
+			    (<%= link_to "Cancel Request", friendships_destroy_path(:type => "inverse-friend",:id => inverse_friendships.id) , :method => :delete %>)
+			    <% end %>
+			</ul>
+			<h5>Pending Request BY You</h5>
+			<ul>
+			<% for request_friend in @all_my_req %>
+			    <li><%= request_friend.friend.email %></li>
+			    (<%= link_to "Cancel Request", friendships_destroy_path(:type => "friend",:id => request_friend.id) , :method => :delete %>)
+			    <% end %>
+			</ul>
+			<h5>All Users</h5>
+			<ul id="users-lists">
+					<% @users.each do |user| %>
+						<% if @n_elg_frnds.include? user.id%>
+							<% next %>
+						<% else %>
+							<%= render 'user', u: user %>
+						<% end %>
+					<% end %>
+			</ul>
+			
+			</div>
+</div>
